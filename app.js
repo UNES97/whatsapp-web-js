@@ -2,6 +2,10 @@ const { Client , Buttons , MessageMedia , List } = require('whatsapp-web.js');
 const qrcode = require('qrcode-terminal');
 const client = new Client();
 
+const express = require('express');
+const app = express();
+const port = 3000;
+
 client.on('qr', qr => {
     qrcode.generate(qr, {small: true});
 });
@@ -26,7 +30,6 @@ client.on('message', async(msg) => {
             My number: ${info.wid.user}
             Platform: ${info.platform}
         `);
-        
     }
     else if (msg.body === '!buttons') {
         let button = new Buttons('Button body', [{ body: 'bt1' }, { body: 'bt2' }, { body: 'bt3' }], 'title', 'footer');
@@ -39,6 +42,29 @@ client.on('message', async(msg) => {
         let list = new List('List body', 'btnText', sections, 'Title', 'footer');
         await client.sendMessage(msg.from, list);
     }
+});
+
+app.get('/send-message', (req, res) => {
+    try {
+        let info = client.info;
+        client.sendMessage(msg.from, `
+            *Connection info*
+            User name: ${info.pushname}
+            My number: ${info.wid.user}
+            Platform: ${info.platform}
+        `);
+    } catch (err) {
+        console.error('Failed to send message:', err);
+        res.status(500).send('Error sending the message: ' + err.message);
+    }
+});
+
+app.get('/', (req, res) => {
+    res.send('Hello');
+});
+
+app.listen(port, () => {
+    console.log(`Server is running on http://localhost:${port}`);
 });
 
 client.initialize();
