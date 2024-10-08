@@ -44,7 +44,6 @@ client.on('message', async(msg) => {
     }
 });
 
-client.initialize();
 
 app.get('/send-message', (req, res) => {
     try {
