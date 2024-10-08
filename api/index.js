@@ -44,6 +44,8 @@ client.on('message', async(msg) => {
     }
 });
 
+client.initialize();
+
 app.get('/send-message', (req, res) => {
     try {
         let info = client.info;
@@ -68,4 +70,4 @@ app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
 });
 
-client.initialize();
+module.exports = app;
