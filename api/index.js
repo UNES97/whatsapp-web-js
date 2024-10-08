@@ -59,8 +59,9 @@ app.get('/send-message', (req, res) => {
     }
 });
 
-app.get('/', (req, res) => {
-    res.send('Hello');
+app.get("/api", (req , res) => {
+    res.status(200);
+    res.send("Whats API on Vercel");
 });
 
 app.listen(port, () => {
