@@ -6,8 +6,14 @@ const express = require('express');
 const app = express();
 const port = 3000;
 
-client.on('qr', qr => {
+let qrImageData = '';
+
+/* client.on('qr', qr => {
     qrcode.generate(qr, {small: true});
+}); */
+client.on('qr', async (qr) => {
+    qrImageData = await qrcode.toDataURL(qr);
+    console.log('New QR code generated');
 });
 
 client.on('ready', () => {
@@ -45,6 +51,40 @@ client.on('message', async(msg) => {
 });
 
 client.initialize();
+
+app.get('/', (req, res) => {
+    res.send(`
+        <html>
+            <head>
+                <title>WhatsApp QR Code</title>
+                <script>
+                    function refreshImage() {
+                        const img = document.getElementById('qr-code');
+                        img.src = '/qr?' + new Date().getTime();
+                    }
+                    setInterval(refreshImage, 5000); // Refresh every 5 seconds
+                </script>
+            </head>
+            <body>
+                <h1>Scan this QR code with WhatsApp</h1>
+                <img id="qr-code" src="/qr" alt="QR Code">
+            </body>
+        </html>
+    `);
+});
+
+app.get('/qr', (req, res) => {
+    if (qrImageData) {
+        const img = Buffer.from(qrImageData.split(',')[1], 'base64');
+        res.writeHead(200, {
+            'Content-Type': 'image/png',
+            'Content-Length': img.length
+        });
+        res.end(img);
+    } else {
+        res.status(404).send('QR Code not yet generated');
+    }
+});
 
 app.get('/send-message', (req, res) => {
     try {
