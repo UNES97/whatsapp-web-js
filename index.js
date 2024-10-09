@@ -44,7 +44,7 @@ client.on('message', async(msg) => {
     }
 });
 
-/* client.initialize(); */
+client.initialize();
 
 app.get('/send-message', (req, res) => {
     try {
@@ -63,7 +63,7 @@ app.get('/send-message', (req, res) => {
 
 app.get("/api", (req , res) => {
     res.status(200);
-    res.send("Whats API on Vercel");
+    res.send("Whats API on Render");
 });
 
 app.listen(port, () => {
