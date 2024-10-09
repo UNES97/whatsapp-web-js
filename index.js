@@ -1,5 +1,6 @@
 const { Client , Buttons , MessageMedia , List } = require('whatsapp-web.js');
-const qrcode = require('qrcode-terminal');
+/* const qrcode = require('qrcode-terminal'); */
+const qrcode = require('qrcode');
 const client = new Client();
 
 const express = require('express');
@@ -52,7 +53,7 @@ client.on('message', async(msg) => {
 
 client.initialize();
 
-app.get('/', (req, res) => {
+app.get('/myqrcode', (req, res) => {
     res.send(`
         <html>
             <head>
@@ -86,18 +87,39 @@ app.get('/qr', (req, res) => {
     }
 });
 
-app.get('/send-message', (req, res) => {
+function formatMoroccanNumber(number) {
+    number = number.replace(/\D/g, '');
+    
+    if (number.startsWith('0')) {
+        number = number.substring(1);
+    }
+    
+    if (!number.startsWith('212')) {
+        number = '212' + number;
+    }
+    
+    return number + '@c.us';
+}
+
+app.get('/send-message', async (req, res) => {
     try {
-        let info = client.info;
-        client.sendMessage(msg.from, `
-            *Connection info*
-            User name: ${info.pushname}
-            My number: ${info.wid.user}
-            Platform: ${info.platform}
-        `);
-    } catch (err) {
-        console.error('Failed to send message:', err);
-        res.status(500).send('Error sending the message: ' + err.message);
+        const number = req.query.number;
+        console.log(number);
+        
+        const message = "Hello NINJA";
+
+        if (!number) {
+            return res.status(400).send('Please provide number');
+        }
+
+        const chatId = formatMoroccanNumber(number);
+        console.log(chatId);
+
+        const sentMessage = await client.sendMessage(chatId, message);
+        res.status(200).send(`Message sent successfully to ${number}`);
+    } catch (error) {
+        console.error('Error sending message:', error);
+        res.status(500).send('Error sending message');
     }
 });
 
