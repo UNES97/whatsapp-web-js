@@ -1,7 +1,11 @@
 const { Client , Buttons , MessageMedia , List } = require('whatsapp-web.js');
 /* const qrcode = require('qrcode-terminal'); */
 const qrcode = require('qrcode');
-const client = new Client();
+const client = new Client({
+    puppeteer: {
+        args: ['--no-sandbox', '--disable-setuid-sandbox']
+    }
+});
 
 const express = require('express');
 const app = express();
@@ -128,7 +132,7 @@ app.get("/api", (req , res) => {
     res.send("Whats API on Render");
 });
 
-app.listen(port, () => {
+app.listen(port, '0.0.0.0', () => {
     console.log(`Server is running on http://0.0.0.0:${port}`);
 });
 
