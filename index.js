@@ -1,6 +1,8 @@
 const express = require('express');
 const app = express();
-const port = 3000;
+require('dotenv').config()
+
+const port = process.env.APP_PORT;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -15,8 +17,14 @@ app.get("/", (req , res) => {
     });
 });
 
-app.listen(port, '0.0.0.0', () => {
-    console.log(`Server is running on http://0.0.0.0:${port}`);
+const myDB = require("./models");
+myDB.Connection.sync({alter: true}).then(() => {
+    console.log('Synced DB');
+});
+
+const host = process.env.APP_HOST;
+app.listen(port, host, () => {
+    console.log(`Server is running on ${host}:${port}`);
 });
 
 module.exports = app;
