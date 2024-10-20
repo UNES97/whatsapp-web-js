@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MAXMIND x WHATSAPP</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/style.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">MAXMIND x WHATSAPP</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item dropdown text-white">
+                        <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            SANDBOX
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="/sandbox-send">Send Message</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="/docs">API DOCs</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="row">
+        <div class="col-md-4">
+            <img src="./assets/cat.webp" alt="CAT" class="w-100">
+        </div>
+        <div class="col-md-8">
+            <div class="m-5">
+                <form id="qrForm">
+                    <div class="mb-3">
+                        <label for="token" class="form-label">Access Token</label>
+                        <input type="text" class="form-control" id="token" placeholder="Enter your access token">
+                        <div class="invalid-feedback" id="tokenError"></div>
+                    </div>
+                    <button type="submit" class="btn btn-success w-100" id="generateBtn" disabled>Generate QR Code</button>
+                </form>
+
+                <div id="loading" class="d-none justify-content-center mt-3">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+
+                <div id="errorMessage" class="alert alert-danger mt-3 d-none" role="alert"></div>
+
+                <div id="qrImage" class="text-center d-none mt-3">
+                    <h5>Your QR Code:</h5>
+                    <img id="qrCode" class="img-fluid" alt="Generated Qc code">
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="./assets/js/main.js"></script>
+</body>
+</html>

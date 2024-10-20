@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MAXMIND x WHATSAPP</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/style.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">MAXMIND x WHATSAPP</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item dropdown text-white">
+                        <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            SANDBOX
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="/sandbox-send">Send Message</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="/docs">API DOCs</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container my-2">
+        <h1 class="text-center">Send Message Sandbox</h1>
+        <div class="row">
+            <div class="col-md-4">
+                <form onsubmit="sendMessage(event)">
+                    <div class="mb-3">
+                        <label for="token" class="form-label">Access Token</label>
+                        <input type="text" class="form-control" id="token" placeholder="Enter your access token" required value="diKOrQyICsdfB3RgAOxpzSTqVzsp19pHYUyVIHBRR5dl3H02KEELwdiOwRp1c4Cl">
+                    </div>
+                    <div class="mb-3">
+                        <label for="number" class="form-label">Phone Number</label>
+                        <input type="text" class="form-control" id="number" placeholder="Enter phone number" required value="0693148553">
+                    </div>
+                    <div class="mb-3">
+                        <label for="messageType" class="form-label">Message Type</label>
+                        <select class="form-select" id="messageType" onchange="updateInputFields()" required>
+                            <option value="">Select message type</option>
+                            <option value="text">Text Message</option>
+                            <option value="image">Image URL</option>
+                            <option value="imageWithCaption">Image with Caption</option>
+                        </select>
+                    </div>
+                    <div id="messageInput" class="mb-3 d-none">
+                        <label for="message" class="form-label">Message</label>
+                        <textarea class="form-control" id="message" rows="3" placeholder="Enter your message"></textarea>
+                    </div>
+                    <div id="imageUrlInput" class="mb-3 d-none">
+                        <label for="imageUrl" class="form-label">Image URL</label>
+                        <input type="text" class="form-control" id="imageUrl" placeholder="Enter image URL" value="https://cdn.pixabay.com/photo/2016/03/08/20/03/flag-1244649_1280.jpg">
+                    </div>
+                    <div id="captionInput" class="mb-3 d-none">
+                        <label for="caption" class="form-label">Caption (if image)</label>
+                        <textarea class="form-control" id="caption" rows="3" placeholder="Enter caption for the image"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary" id="submitButton">
+                        <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                        <span id="buttonText">Send Message</span>
+                    </button>
+                </form>
+                <div id="responseMessage" style="margin-top: 10px;" class="d-none"></div>
+            </div>
+            <div class="col-md-4">
+                <div>
+                    <h5>Headers</h5>
+                    <pre id="headers" class="border p-2 bg-light"></pre>
+                </div>
+
+                <div>
+                    <h5>Payload</h5>
+                    <pre id="payload" class="border p-2 bg-light"></pre>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <h5>Response</h5>
+                <pre id="response" class="border p-2 bg-light"></pre>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="./assets/js/send.js"></script>
+</body>
+</html>
