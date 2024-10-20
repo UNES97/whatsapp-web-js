@@ -2,13 +2,13 @@ const { Client , MessageMedia , Location, Poll, LocalAuth } = require('whatsapp-
 const qrcode = require('qrcode');
 
 const client = new Client({
-    /* puppeteer: {
+    puppeteer: {
         headless: true,
         args: [
             '--no-sandbox',
             '--disable-setuid-sandbox',
         ],
-    }, */
+    },
     authStrategy: new LocalAuth()
 });
 
